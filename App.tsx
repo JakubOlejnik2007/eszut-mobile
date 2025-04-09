@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import { CameraView, Camera } from "expo-camera";
 
 export default function App() {
 
