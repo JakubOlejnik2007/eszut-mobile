@@ -17,8 +17,26 @@ export default function App() {
     getToken();
   }, []);
 
-  const handleSaveToken = async () => {
-    await AsyncStorage.setItem('userToken', value);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState(false);
+
+  useEffect(() => {
+    const getCameraPermissions = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === "granted");
+    };
+
+    getCameraPermissions();
+  }, []);
+
+  const handleBarcodeScanned = async ({ type, data }: { type: any, data: any }) => {
+    setScanned(true);
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    await handleSaveToken(data);
+  };
+
+  const handleSaveToken = async (new_token: string = '') => {
+    await AsyncStorage.setItem('userToken', new_token || value);
     const token = await AsyncStorage.getItem('userToken') || '';
     setToken(token);
   }
