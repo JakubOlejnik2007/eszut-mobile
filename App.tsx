@@ -24,8 +24,13 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
+      {token ? <Text>{token}</Text> : <Text>Brak tokena</Text>}
+      <>
+        <Text>Open up App.tsx to start working on your app!</Text>
+        <TextInput value={value} onChangeText={(text) => setValue(text)} placeholder='text'></TextInput>
+        <Button title='Zatwierdź' onPress={handleSaveToken} />
+      </>
     </View>
   );
 }
