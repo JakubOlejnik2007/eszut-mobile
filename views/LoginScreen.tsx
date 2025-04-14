@@ -32,11 +32,29 @@ const LoginScreen = () => {
     console.log(token)
 
     return (
-        <>
-            <View>
-                <Text>LoginScreen</Text>
-            </View>
-        </>
+        <View style={{ flex: 1 }}>
+            <StatusBar />
+            {token ? <Text>{token}</Text> : <Text>Brak tokena</Text>}
+            <>
+                <Text>Open up App.tsx to start working on your app!</Text>
+                <Button title='Zatwierdź' onPress={() => handleSaveToken()} />
+            </>
+
+            {hasPermission && !scanned ? (
+                <View style={{ flex: 1, width: '100%' }}>
+                    <CameraView
+                        onBarcodeScanned={handleBarcodeScanned}
+                        barcodeScannerSettings={{
+                            barcodeTypes: ["qr", "pdf417"],
+                        }}
+                        style={{ flex: 1 }}
+                    />
+                    <Button title={"Anuluj skanowanie"} onPress={() => setScanned(true)} />
+                </View>
+            ) : (
+                !hasPermission ? <Text>Brak dostępu do kamery</Text> : null
+            )}
+        </View>
     )
 }
 
