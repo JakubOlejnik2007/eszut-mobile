@@ -5,8 +5,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from '../views/HomeScreen';
 import LoginScreen from '../views/LoginScreen'
+import Navigation from '../navigation/Navigation'
 
-const Stack = createNativeStackNavigator()
+
 
 type UserData = {
     userId: string
@@ -81,15 +82,7 @@ const Auth = () => {
 
     return (
         <AuthContext.Provider value={{ token, user, setAuth, clearAuth }}>
-            <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    {token ? (
-                        <Stack.Screen name="Home" component={HomeScreen} />
-                    ) : (
-                        <Stack.Screen name="Login" component={LoginScreen} />
-                    )}
-                </Stack.Navigator>
-            </NavigationContainer>
+            <Navigation />
         </AuthContext.Provider>
     )
 }
