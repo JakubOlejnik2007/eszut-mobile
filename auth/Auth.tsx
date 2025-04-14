@@ -21,13 +21,15 @@ type AuthData = {
     user: UserData | null
     setAuth: (auth: AuthData) => void
     clearAuth: () => void
+    addNewToken: (token: string) => void
 }
 
 const defaultAuth: AuthData = {
     token: null,
     user: null,
     setAuth: () => { },
-    clearAuth: () => { }
+    clearAuth: () => { },
+    addNewToken: () => { },
 }
 
 export const AuthContext = createContext<AuthData>(defaultAuth)
@@ -72,6 +74,10 @@ const Auth = () => {
         init()
     }, [])
 
+    const addNewToken = async (newToken: string) => {
+        setAuth({ token: newToken, user: decodeToken(newToken) })
+    }
+
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -81,7 +87,7 @@ const Auth = () => {
     }
 
     return (
-        <AuthContext.Provider value={{ token, user, setAuth, clearAuth }}>
+        <AuthContext.Provider value={{ token, user, setAuth, clearAuth, addNewToken }}>
             <Navigation />
         </AuthContext.Provider>
     )
