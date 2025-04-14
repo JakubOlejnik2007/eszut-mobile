@@ -7,8 +7,6 @@ import HomeScreen from '../views/HomeScreen'
 import LoginScreen from '../views/LoginScreen'
 import Navigation from '../navigation/Navigation'
 
-
-
 type UserData = {
     userId: string
     email: string
@@ -67,7 +65,7 @@ const Auth = () => {
 
     useEffect(() => {
         const init = async () => {
-            const storedToken = await AsyncStorage.getItem('userTodken')
+            const storedToken = await AsyncStorage.getItem('userToken')
             if (storedToken) {
                 setToken(storedToken)
 
