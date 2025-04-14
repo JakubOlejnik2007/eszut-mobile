@@ -3,7 +3,7 @@ import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../views/HomeScreen';
+import HomeScreen from '../views/HomeScreen'
 import LoginScreen from '../views/LoginScreen'
 import Navigation from '../navigation/Navigation'
 
@@ -54,8 +54,11 @@ const Auth = () => {
     const setAuth = ({ token, user }: { token: string | null; user: UserData | null }) => {
         setToken(token)
         setUser(user)
-        if (token) AsyncStorage.setItem('userToken', token)
-        else AsyncStorage.removeItem('userToken')
+        if (token) {
+            AsyncStorage.setItem('userToken', token)
+        } else {
+            AsyncStorage.removeItem('userToken')
+        }
     }
 
     const clearAuth = () => {
@@ -67,7 +70,13 @@ const Auth = () => {
             const storedToken = await AsyncStorage.getItem('userTodken')
             if (storedToken) {
                 setToken(storedToken)
-                setUser(decodeToken(storedToken))
+
+                const decodedUser = decodeToken(storedToken)
+                setUser(decodedUser)
+
+                if (!decodedUser) {
+                    clearAuth()
+                }
             }
             setLoading(false)
         }
