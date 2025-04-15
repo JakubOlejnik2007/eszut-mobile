@@ -6,15 +6,16 @@ import { NavEntries } from "./NavEntries";
 const Navigation = () => {
     const { token, user } = useAuth()
 
+    const Tab = createBottomTabNavigator()
+
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {token && user ? (
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                ) : (
-                    <Stack.Screen name="Login" component={LoginScreen} />
-                )}
-            </Stack.Navigator>
+            <Tab.Navigator>
+                {
+                    !token || !user ? NavEntries.filter((value) => !value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} />) :
+                        NavEntries.filter((value) => value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} />)
+                }
+            </Tab.Navigator>
         </NavigationContainer>
     )
 }
