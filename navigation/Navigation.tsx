@@ -1,10 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import HomeScreen from "../views/HomeScreen"
-import LoginScreen from "../views/LoginScreen"
 import { useAuth } from "../auth/Auth"
-
-const Stack = createNativeStackNavigator()
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavEntries } from "./NavEntries";
 
 const Navigation = () => {
     const { token, user } = useAuth()
