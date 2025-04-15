@@ -1,10 +1,6 @@
 import React, { useEffect, useState, createContext, useContext } from 'react'
 import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../views/HomeScreen'
-import LoginScreen from '../views/LoginScreen'
 import Navigation from '../navigation/Navigation'
 
 type UserData = {
