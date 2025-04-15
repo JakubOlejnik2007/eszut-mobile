@@ -3,11 +3,9 @@ import { View, ActivityIndicator } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../views/HomeScreen';
+import HomeScreen from '../views/HomeScreen'
 import LoginScreen from '../views/LoginScreen'
 import Navigation from '../navigation/Navigation'
-
-
 
 type UserData = {
     userId: string
@@ -21,13 +19,15 @@ type AuthData = {
     user: UserData | null
     setAuth: (auth: AuthData) => void
     clearAuth: () => void
+    addNewToken: (token: string) => void
 }
 
 const defaultAuth: AuthData = {
     token: null,
     user: null,
     setAuth: () => { },
-    clearAuth: () => { }
+    clearAuth: () => { },
+    addNewToken: () => { },
 }
 
 export const AuthContext = createContext<AuthData>(defaultAuth)
@@ -52,8 +52,11 @@ const Auth = () => {
     const setAuth = ({ token, user }: { token: string | null; user: UserData | null }) => {
         setToken(token)
         setUser(user)
-        if (token) AsyncStorage.setItem('userToken', token)
-        else AsyncStorage.removeItem('userToken')
+        if (token) {
+            AsyncStorage.setItem('userToken', token)
+        } else {
+            AsyncStorage.removeItem('userToken')
+        }
     }
 
     const clearAuth = () => {
@@ -62,15 +65,25 @@ const Auth = () => {
 
     useEffect(() => {
         const init = async () => {
-            const storedToken = await AsyncStorage.getItem('userTodken')
+            const storedToken = await AsyncStorage.getItem('userToken')
             if (storedToken) {
                 setToken(storedToken)
-                setUser(decodeToken(storedToken))
+
+                const decodedUser = decodeToken(storedToken)
+                setUser(decodedUser)
+
+                if (!decodedUser) {
+                    clearAuth()
+                }
             }
             setLoading(false)
         }
         init()
     }, [])
+
+    const addNewToken = async (newToken: string) => {
+        setAuth({ token: newToken, user: decodeToken(newToken) })
+    }
 
     if (loading) {
         return (
@@ -81,7 +94,7 @@ const Auth = () => {
     }
 
     return (
-        <AuthContext.Provider value={{ token, user, setAuth, clearAuth }}>
+        <AuthContext.Provider value={{ token, user, setAuth, clearAuth, addNewToken }}>
             <Navigation />
         </AuthContext.Provider>
     )
