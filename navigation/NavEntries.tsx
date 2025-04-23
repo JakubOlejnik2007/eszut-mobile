@@ -1,5 +1,6 @@
 import HomeScreen from "../views/HomeScreen";
 import LoginScreen from "../views/LoginScreen";
+import Preferences from "../views/Preferences";
 
 export type TNavItem = {
     name: string;
@@ -30,7 +31,7 @@ export const NavEntries: TNavItem[] = [
     },
     {
         name: NavNames.preferences,
-        component: HomeScreen,
+        component: Preferences,
         isPrivate: true,
         isMenu: true,
     },
