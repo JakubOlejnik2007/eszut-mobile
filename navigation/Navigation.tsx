@@ -12,8 +12,8 @@ const Navigation = () => {
         <NavigationContainer>
             <Tab.Navigator>
                 {
-                    !token || !user ? NavEntries.filter((value) => !value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} />) :
-                        NavEntries.filter((value) => value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} />)
+                    !token || !user ? NavEntries.filter((value) => !value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} key={item.name} />) :
+                        NavEntries.filter((value) => value.isMenu).map(item => <Tab.Screen name={item.name} component={item.component} key={item.name} />)
                 }
             </Tab.Navigator>
         </NavigationContainer>
