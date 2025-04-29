@@ -1,13 +1,23 @@
-import { StatusBar, SafeAreaView } from 'react-native';
+import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import Auth from './auth/Auth';
 
 export default function App() {
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#f1b3cc" />
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#f1b3cc" }}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <SafeAreaView style={{ flex: 1, backgroundColor: "" }}>
         <Auth />
       </SafeAreaView>
     </>
   );
 }
+
+
+const styles = StyleSheet.create({
+  main: {
+    backgroundColor: 'black',
+  },
+  test: {
+    color: 'white',
+  },
+});
