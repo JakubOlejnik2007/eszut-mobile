@@ -18,15 +18,20 @@ type THTTPRequestMethods = "GET" | "POST" | "PUT" | "DELETE";
  * @returns the data from the response of the API request.
  */
 const createApiRequest = async (method: THTTPRequestMethods, url: string, data: Object = {}, authToken: string = "") => {
-    const config = {
+    const config: any = {
         method,
         url,
         headers: {
             ...(authToken && { Authorization: `Bearer ${authToken}` }),
         },
-        data,
     };
+
+    if (method !== "GET") {
+        config.data = data;
+    }
     const response = await axios(config);
+    console.log("API Response:", response)
+    console.log("Func", JSON.stringify(response.data))
     return response.data;
 };
 
