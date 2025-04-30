@@ -41,11 +41,50 @@ const ReportIssueScreen = () => {
 
 
     return (
-        <>
-            <View>
-                <Text>Zgłoś usterkę</Text>
-            </View>
-        </>
+        <View>
+            <Text>Zgłoś usterkę</Text>
+            {
+                categoriesQuery.isLoading && <Text>Ładowanie kategorii...</Text>
+            }
+            {
+                categoriesQuery.isError && <Text>Wystąpił błąd podczas ładowania kategorii</Text>
+            }
+            {
+                categoriesQuery.isSuccess && (
+                    <Picker
+                        selectedValue={selectedValue}
+                        onValueChange={(itemValue: string) => setSelectedValue(itemValue)}
+                    >
+                        {
+                            categoriesQuery.data.map((place: any) => (
+                                <Picker.Item label={place.name} value={place._id} key={place._id} />
+                            ))
+                        }
+                    </Picker>
+                )
+            }
+            {
+                placesQuery.isLoading && <Text>Ładowanie miejsc...</Text>
+            }
+            {
+                placesQuery.isError && <Text>Wystąpił błąd podczas ładowania miejsc</Text>
+            }
+            {
+                placesQuery.isSuccess && (
+                    <Picker
+                        selectedValue={selectedValue}
+                        onValueChange={(itemValue: string) => setSelectedValue(itemValue)}
+                    >
+                        {
+                            placesQuery.data.map((place: any) => (
+                                <Picker.Item label={place.name} value={place._id} key={place._id} />
+                            ))
+                        }
+                    </Picker>
+                )
+            }
+
+        </View>
     )
 }
 
