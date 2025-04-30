@@ -1,10 +1,10 @@
 import { View, Text } from "react-native"
-
+import {styles} from '../styles/styles'
 const HomeScreen = () => {
     return (
         <>
-            <View>
-                <Text>Home Screen</Text>
+            <View style={styles.main}>
+                <Text style={styles.text}>Home Screen</Text>
             </View>
         </>
     )
